@@ -74,7 +74,8 @@ class SmallerNet(nn.Module):
     def forward(self, x):
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(x)
-        x = x.view(x.size(0), -1)
+        print(x.shape) 
+        x = x.view(-1, 8 * 8 * 8)
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
         return x
