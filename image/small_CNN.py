@@ -145,6 +145,8 @@ for epoch in range(epoch_num):  # loop over the dataset multiple times
 
         # forward + backward + optimize
         outputs = model(inputs)
+        print(outputs.shape)
+        print(labels.shape)
         loss = criterion(outputs, labels)
         loss.backward()
         optimizer.step()
