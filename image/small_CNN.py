@@ -65,21 +65,18 @@ test_loader = torch.utils.data.DataLoader(test_data, batch_size=64, shuffle=Fals
 ## shallow CNN
 class SmallerNet(nn.Module):
     def __init__(self):
-        super(SmallerNet, self).__init__()
-        self.conv1 = nn.Conv2d(3, 16, 3, padding=1)
-        self.conv2 = nn.Conv2d(16, 32, 3, padding=1)
+        super(SmallestNet, self).__init__()
+        self.conv1 = nn.Conv2d(3, 8, 3, padding=1)
         self.pool = nn.MaxPool2d(2, 2)
-        self.fc1 = nn.Linear(32 * 8 * 8, 256)
-        self.fc2 = nn.Linear(256, 128)
-        self.fc3 = nn.Linear(128, 9)  # Assuming there are 9 classes
+        self.fc1 = nn.Linear(8 * 8 * 8, 64)
+        self.fc2 = nn.Linear(64, 9)  # Assuming there are 9 classes
 
     def forward(self, x):
         x = self.pool(F.relu(self.conv1(x)))
-        x = self.pool(F.relu(self.conv2(x)))
-        x = x.view(-1, 32 * 8 * 8)
+        x = self.pool(x)
+        x = x.view(-1, 8 * 8 * 8)
         x = F.relu(self.fc1(x))
-        x = F.relu(self.fc2(x))
-        x = self.fc3(x)
+        x = self.fc2(x)
         return x
 
 # Evaluate the model
