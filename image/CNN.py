@@ -45,8 +45,8 @@ transform = transforms.Compose([
 ])
 
 # Load the training and testing datasets
-train_data = datasets.ImageFolder(root='/Users/cglin/Desktop/image/dataset/train', transform=transform)
-test_data = datasets.ImageFolder(root='/Users/cglin/Desktop/image/dataset/test', transform=transform)
+train_data = datasets.ImageFolder(root='/mnt/mxy/linchungang/image_diagnosis/fig/train', transform=transform)
+test_data = datasets.ImageFolder(root='/mnt/mxy/linchungang/image_diagnosis/fig/test', transform=transform)
 
 # Create data loaders
 train_loader = torch.utils.data.DataLoader(train_data, batch_size=64, shuffle=True)
