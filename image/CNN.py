@@ -185,7 +185,7 @@ for epoch in range(epoch_num):  # loop over the dataset multiple times
 # print("Final Test")
 # check_accuracy(test_loader, model)
 
-
+torch.save(model.state_dict(), '/mnt/mxy/linchungang/image_diagnosis/CNN.pth')
 
 print('Finished Training')
 
