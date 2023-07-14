@@ -8,7 +8,7 @@ import torchvision.transforms as transforms
 import torch.nn.functional as F
 
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-import wandb
+# import wandb
 import argparse
 
 parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -21,18 +21,18 @@ parser.add_argument("--name", type=str, default="CNN",
 
 args = parser.parse_args()
 
-# 初始化wanda
-wandb.init(
-    # set the wandb project where this run will be logged
-    project="Image-diagnosis",
-    name = args.name,
-    # track hyperparameters and run metadata
-    config={
-    "Learning Rate": args.lr,
-    "Batch size": 64,
-    "model": "CNN"
-    }
-)
+# # 初始化wanda
+# wandb.init(
+#     # set the wandb project where this run will be logged
+#     project="Image-diagnosis",
+#     name = args.name,
+#     # track hyperparameters and run metadata
+#     config={
+#     "Learning Rate": args.lr,
+#     "Batch size": 64,
+#     "model": "CNN"
+#     }
+# )
 
 # Check if GPU is available
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -127,10 +127,10 @@ def check_accuracy(test_loader, model):
     print(recall)
     print("F1_Test")
     print(f1)
-    wandb.log({"Accuracy_Test": accuracy})
-    wandb.log({"Precision_Test": precision})
-    wandb.log({"Recall_Test": recall})
-    wandb.log({"F1_Test":  f1})
+    # wandb.log({"Accuracy_Test": accuracy})
+    # wandb.log({"Precision_Test": precision})
+    # wandb.log({"Recall_Test": recall})
+    # wandb.log({"F1_Test":  f1})
 
     print('Accuracy of the network on the test images: %d %%' % (100 * correct / total))
 
@@ -167,7 +167,7 @@ for epoch in range(epoch_num):  # loop over the dataset multiple times
         if (i + 1) % report_steps == 0:
             # logging.info("Epoch id: {}, Training steps: {}, Avg loss: {:.3f}".format(epoch, i + 1, total_loss / report_steps))
             print("Epoch id: {}, Training steps: {}, Avg loss: {:.3f}".format(epoch, i + 1, total_loss / report_steps))
-            wandb.log({"loss": total_loss / report_steps})
+            # wandb.log({"loss": total_loss / report_steps})
             total_loss = 0.0
     print("epoch num : ")
     print(epoch)

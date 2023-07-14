@@ -21,3 +21,6 @@
 #### 训练命令
 
 CUDA_VISIBLE_DEVICES=2,3 /data0/mxy/linchungang/fault-intelligent-diagnosis/image/CNN.py --lr 0.01 --name CNN_0.01
+
+CUDA_VISIBLE_DEVICES=2,3 python CNN.py --lr 0.01 --name CNN_0.01
+
