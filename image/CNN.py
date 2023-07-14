@@ -45,8 +45,16 @@ transform = transforms.Compose([
 ])
 
 # Load the training and testing datasets
-train_data = datasets.ImageFolder(root='/mnt/mxy/linchungang/image_diagnosis/fig/train', transform=transform)
-test_data = datasets.ImageFolder(root='/mnt/mxy/linchungang/image_diagnosis/fig/test', transform=transform)
+
+dataset = datasets.ImageFolder(root='/mnt/mxy/linchungang/image_diagnosis/fig/train', transform=transform)
+
+total_size = len(dataset)
+train_size = int(0.9 * total_size)  # 80% for training
+val_size = total_size - train_size  # 20% for validation
+train_data, test_data = random_split(dataset, [train_size, val_size])
+
+
+# test_data = datasets.ImageFolder(root='/mnt/mxy/linchungang/image_diagnosis/fig/test', transform=transform)
 
 # Create data loaders
 train_loader = torch.utils.data.DataLoader(train_data, batch_size=64, shuffle=True)
