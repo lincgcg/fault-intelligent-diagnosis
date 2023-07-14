@@ -65,7 +65,7 @@ test_loader = torch.utils.data.DataLoader(test_data, batch_size=64, shuffle=Fals
 ## shallow CNN
 class SmallerNet(nn.Module):
     def __init__(self):
-        super(SmallestNet, self).__init__()
+        super(SmallerNet, self).__init__()
         self.conv1 = nn.Conv2d(3, 8, 3, padding=1)
         self.pool = nn.MaxPool2d(2, 2)
         self.fc1 = nn.Linear(8 * 8 * 8, 64)
