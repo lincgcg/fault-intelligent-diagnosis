@@ -6,6 +6,7 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 import torch.nn.functional as F
+from torch.utils.data import random_split
 
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 # import wandb
