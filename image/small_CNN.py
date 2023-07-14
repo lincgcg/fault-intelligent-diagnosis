@@ -68,14 +68,14 @@ class SmallerNet(nn.Module):
         super(SmallerNet, self).__init__()
         self.conv1 = nn.Conv2d(3, 8, 3, padding=1)
         self.pool = nn.MaxPool2d(2, 2)
-        self.fc1 = nn.Linear(8 * 8 * 8, 64)
+        self.fc1 = nn.Linear(8 * 16 * 16, 64)
         self.fc2 = nn.Linear(64, 9)  # Assuming there are 9 classes
 
     def forward(self, x):
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(x)
-        print(x.shape) 
-        x = x.view(-1, 8 * 8 * 8)
+        # print(x.shape) 
+        x = x.view(-1, 8 * 16 * 16)
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
         return x
@@ -143,9 +143,9 @@ for epoch in range(epoch_num):  # loop over the dataset multiple times
 
         # forward + backward + optimize
         outputs = model(inputs)
-        print(inputs.shape)
-        print(outputs.shape)
-        print(labels.shape)
+        # print(inputs.shape)
+        # print(outputs.shape)
+        # print(labels.shape)
         loss = criterion(outputs, labels)
         loss.backward()
         optimizer.step()
