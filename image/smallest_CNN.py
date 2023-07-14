@@ -68,14 +68,14 @@ class SmallestNet(nn.Module):
         super(SmallestNet, self).__init__()
         self.conv1 = nn.Conv2d(3, 6, 3, padding=1)
         self.pool = nn.MaxPool2d(2, 2)
-        self.fc1 = nn.Linear(6 * 8 * 8, 32)
+        self.fc1 = nn.Linear(6 * 16 * 16, 32)
         self.fc2 = nn.Linear(32, 9)  # Assuming there are 9 classes
 
     def forward(self, x):
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(x)
-        print(x.shape) 
-        x = x.view(-1, 6 * 8 * 8)
+        # print(x.shape) 
+        x = x.view(-1, 6 * 16 * 16)
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
         return x
