@@ -71,9 +71,28 @@ class SmallerNet(nn.Module):
         x = self.fc2(x)
         return x
 
+class Net(nn.Module):
+    def __init__(self):
+        super(Net, self).__init__()
+        self.conv1 = nn.Conv2d(3, 6, 5)
+        self.pool = nn.MaxPool2d(2, 2)
+        self.conv2 = nn.Conv2d(6, 16, 5)
+        self.fc1 = nn.Linear(16 * 13 * 13, 120)
+        self.fc2 = nn.Linear(120, 84)
+        self.fc3 = nn.Linear(84, 9)  # Assuming there are 2 classes - cats and dogs
+
+    def forward(self, x):
+        x = self.pool(F.relu(self.conv1(x)))
+        x = self.pool(F.relu(self.conv2(x)))
+        x = x.view(-1, 16 * 13 * 13)
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = self.fc3(x)
+        return x
+
 # Load the saved model
-model = SmallestNet()
-file_path = "/Users/cglin/Desktop/CNN/SmallestNet/SmallestNet.pth"
+model = Net()
+file_path = "/Users/cglin/Desktop/CNN/fulltrain/float16/medium_CNN/medium_CNN_16.pth"
 model.load_state_dict(torch.load(file_path, map_location=torch.device('cpu')))
 model.eval()
 
@@ -126,7 +145,7 @@ for id, class_name in id_class_dict.items():
 sorted_dict = dict(sorted(id_class_dict.items(), key=lambda item: int(item[0]), reverse=False))
 
 # Write the sorted dictionary to a CSV file
-with open('/Users/cglin/Desktop/CNN/SmallestNet/result.csv', 'w', newline='') as file:
+with open('/Users/cglin/Desktop/CNN/fulltrain/float16/medium_CNN/result.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(["ID", "label"])  # Write header
     for id, label in sorted_dict.items():
