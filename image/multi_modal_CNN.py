@@ -151,8 +151,8 @@ def check_accuracy(test_loader, model):
 
     with torch.no_grad():
         for data in test_loader:
-            images, labels = data[0].to(device), data[1].to(device)
-            outputs = model(images)
+            images, features, labels = data[0].to(device), data[1].to(device), data[2].to(device)
+            outputs = model(images,features)
             _, predicted = torch.max(outputs.data, 1)
             predicted_labels.extend(predicted.cpu().numpy())
             true_labels.extend(labels.cpu().numpy())
