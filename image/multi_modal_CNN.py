@@ -151,7 +151,7 @@ def check_accuracy(test_loader, model):
 
 # Instantiate the CNN
 model = MultiModalNet()
-# model = model.half()
+model = model.half()
 model.to(device)
 
 # Define the loss function and optimizer
@@ -168,7 +168,8 @@ for epoch in range(epoch_num):  # loop over the dataset multiple times
     for i, data in enumerate(train_loader, 0):
         # print(data)
         images, features, labels = data[0].to(device), data[1].to(device), data[2].to(device)
-
+        images = images.half()
+        features = features.half()
         # zero the parameter gradients
         optimizer.zero_grad()
 
