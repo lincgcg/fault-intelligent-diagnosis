@@ -47,3 +47,7 @@ scp -P 19000 ms1@120.92.17.23:/mnt/mxy/linchungang/image_diagnosis/full_train/fl
 CUDA_VISIBLE_DEVICES=2,3 python CNN_fulltrain_float16.py --lr 0.01 --name CNN_0.01
 
 scp -P 19000 ms1@120.92.17.23:/mnt/mxy/linchungang/image_diagnosis/full_train/float16/CNN_16.pth /Users/cglin/Desktop/CNN/fulltrain/float16/CNN/
+
+CUDA_VISIBLE_DEVICES=2,3 python medium_CNN_fulltrain.py --lr 0.01 --name CNN_0.01
+
+scp -P 19000 ms1@120.92.17.23:/mnt/mxy/linchungang/image_diagnosis/full_train/float32/medium_CNN.pth /Users/cglin/Desktop/CNN/fulltrain/float32/medium_CNN/
