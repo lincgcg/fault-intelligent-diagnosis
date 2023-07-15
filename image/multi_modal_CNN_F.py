@@ -40,6 +40,9 @@ class CustomImageFolder(DatasetFolder):
         # 将第4列和第5列的NaN值替换为各自列的平均值
         self.csv_data['日产液量'].fillna(-1, inplace=True)
         self.csv_data['日产气量'].fillna(-1, inplace=True)
+        for feature in feature_list:
+            self.csv_data[feature].fillna(-1, inplace=True)
+
         super(CustomImageFolder, self).__init__(root, loader=default_loader, extensions=('jpg', 'jpeg', 'png'), transform=transform, target_transform=target_transform)
 
     def __getitem__(self, index):
