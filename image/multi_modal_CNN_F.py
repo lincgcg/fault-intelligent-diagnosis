@@ -73,7 +73,7 @@ transform = transforms.Compose([
 
 # Load the training and testing datasets
 
-dataset = CustomImageFolder('/mnt/mxy/linchungang/image_diagnosis/fig/train', '/mnt/mxy/linchungang/image_diagnosis/dataset/train_add.csv', transform=transform)
+dataset = CustomImageFolder('/mnt/mxy/linchungang/image_diagnosis/fig/train', '/mnt/mxy/linchungang/image_diagnosis/dataset/train_add2.csv', transform=transform)
 
 # dataset = datasets.ImageFolder(root='/mnt/mxy/linchungang/image_diagnosis/fig/train', transform=transform)
 
