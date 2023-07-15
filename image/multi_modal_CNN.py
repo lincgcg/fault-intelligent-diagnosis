@@ -80,21 +80,21 @@ transform = transforms.Compose([
 
 # Load the training and testing datasets
 
-train_data = CustomImageFolder('/mnt/mxy/linchungang/image_diagnosis/fig/train', '/mnt/mxy/linchungang/image_diagnosis/dataset/train/train.csv', transform=transform)
+dataset = CustomImageFolder('/mnt/mxy/linchungang/image_diagnosis/fig/train', '/mnt/mxy/linchungang/image_diagnosis/dataset/train/train.csv', transform=transform)
 
 # dataset = datasets.ImageFolder(root='/mnt/mxy/linchungang/image_diagnosis/fig/train', transform=transform)
 
-# total_size = len(dataset)
-# train_size = int(1 * total_size)  # 100% for training
-# val_size = total_size - train_size  # 0% for validation
-# train_data, test_data = random_split(dataset, [train_size, val_size])
+total_size = len(dataset)
+train_size = int(0.9 * total_size)  # 100% for training
+val_size = total_size - train_size  # 0% for validation
+train_data, test_data = random_split(dataset, [train_size, val_size])
 
 
 # test_data = datasets.ImageFolder(root='/mnt/mxy/linchungang/image_diagnosis/fig/test', transform=transform)
 
 # Create data loaders
 train_loader = torch.utils.data.DataLoader(train_data, batch_size=64, shuffle=True)
-# test_loader = torch.utils.data.DataLoader(test_data, batch_size=64, shuffle=False)
+test_loader = torch.utils.data.DataLoader(test_data, batch_size=64, shuffle=False)
 
 # class MultiModalNet(nn.Module):
 #     def __init__(self):
@@ -218,8 +218,8 @@ for epoch in range(epoch_num):  # loop over the dataset multiple times
             # wandb.log({"loss": total_loss / report_steps})
             total_loss = 0.0
     print("epoch num : ")
-    # print(epoch)
-    # check_accuracy(test_loader, model)
+    print(epoch)
+    check_accuracy(test_loader, model)
 
 # print("Final Test")
 # check_accuracy(test_loader, model)
