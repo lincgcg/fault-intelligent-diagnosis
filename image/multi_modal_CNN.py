@@ -123,7 +123,8 @@ class MultiModalNet(nn.Module):
         self.conv2 = nn.Conv2d(32, 64, 3, padding=1)
         self.conv3 = nn.Conv2d(64, 128, 3, padding=1)
         self.pool = nn.MaxPool2d(2, 2)
-        self.fc1 = nn.Linear(128 * 8 * 8 + 2, 500)
+        self.fc0 = nn.Linear(2, 10)
+        self.fc1 = nn.Linear(128 * 8 * 8 + 10, 500)
         self.fc2 = nn.Linear(500, 250)
         self.fc3 = nn.Linear(250, 9)  # Assuming there are 2 classes - cats and dogs
 
@@ -132,7 +133,7 @@ class MultiModalNet(nn.Module):
         x = self.pool(F.relu(self.conv2(x)))
         x = self.pool(F.relu(self.conv3(x)))
         x = x.view(-1, 128 * 8 * 8)
-        
+        features = F.relu(self.fc0(features))
         features = features.to(x.dtype)
         x = torch.cat((x, features), dim=1)
         
