@@ -47,6 +47,10 @@ class CustomImageFolder(DatasetFolder):
     def __init__(self, root, csv_file, transform=None, target_transform=None):
         self.csv_data = pd.read_csv(csv_file)
         self.csv_data.set_index('编号', inplace=True)  # assuming 'image_name' is a column in your csv file
+        
+        # 将第4列和第5列的NaN值替换为各自列的平均值
+        self.csv_data['日产液量'].fillna(-1, inplace=True)
+        self.csv_data['日产气量'].fillna(-1, inplace=True)
         super(CustomImageFolder, self).__init__(root, loader=default_loader, extensions=('jpg', 'jpeg', 'png'), transform=transform, target_transform=target_transform)
 
     def __getitem__(self, index):
