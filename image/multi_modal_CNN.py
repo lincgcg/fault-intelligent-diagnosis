@@ -73,14 +73,14 @@ transform = transforms.Compose([
 
 # Load the training and testing datasets
 
-dataset = CustomDataset('/mnt/mxy/linchungang/image_diagnosis/fig/train', '/mnt/mxy/linchungang/image_diagnosis/dataset/train/train.csv', transform=transform)
+train_data = CustomImageFolder('/mnt/mxy/linchungang/image_diagnosis/fig/train', '/mnt/mxy/linchungang/image_diagnosis/dataset/train/train.csv', transform=transform)
 
-dataset = datasets.ImageFolder(root='/mnt/mxy/linchungang/image_diagnosis/fig/train', transform=transform)
+# dataset = datasets.ImageFolder(root='/mnt/mxy/linchungang/image_diagnosis/fig/train', transform=transform)
 
-total_size = len(dataset)
-train_size = int(1 * total_size)  # 100% for training
-val_size = total_size - train_size  # 0% for validation
-train_data, test_data = random_split(dataset, [train_size, val_size])
+# total_size = len(dataset)
+# train_size = int(1 * total_size)  # 100% for training
+# val_size = total_size - train_size  # 0% for validation
+# train_data, test_data = random_split(dataset, [train_size, val_size])
 
 
 # test_data = datasets.ImageFolder(root='/mnt/mxy/linchungang/image_diagnosis/fig/test', transform=transform)
