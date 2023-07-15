@@ -67,7 +67,7 @@ transform = transforms.Compose([
 
 # Load the training and testing datasets
 
-dataset = CustomImageFolder('/mnt/mxy/linchungang/image_diagnosis/fig/train', '/mnt/mxy/linchungang/image_diagnosis/dataset/train/train.csv', transform=transform)
+dataset = CustomImageFolder('/mnt/mxy/linchungang/image_diagnosis/fig2/train', '/mnt/mxy/linchungang/image_diagnosis/dataset/train/train.csv', transform=transform)
 
 # dataset = datasets.ImageFolder(root='/mnt/mxy/linchungang/image_diagnosis/fig/train', transform=transform)
 
@@ -193,7 +193,7 @@ for epoch in range(epoch_num):  # loop over the dataset multiple times
 # print("Final Test")
 # check_accuracy(test_loader, model)
 
-torch.save(model.state_dict(), '/mnt/mxy/linchungang/image_diagnosis/full_train/final/multimodal_CNN.pth')
+torch.save(model.state_dict(), '/mnt/mxy/linchungang/image_diagnosis/full_train/final/multimodal_CNN2.pth')
 
 print('Finished Training')
 
