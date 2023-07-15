@@ -150,7 +150,7 @@ def check_accuracy(test_loader, model):
 
 # Instantiate the CNN
 model = MultiModalNet()
-model = model.half
+# model = model.half()
 model.to(device)
 
 # Define the loss function and optimizer
