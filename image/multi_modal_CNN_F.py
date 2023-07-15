@@ -170,8 +170,8 @@ model.to(device)
 
 # Define the loss function and optimizer
 criterion = nn.CrossEntropyLoss()
-# optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=0.9)
-optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=0.01)
+optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=0.9)
+# optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=0.01)
 
 
 report_steps = 30
