@@ -104,7 +104,8 @@ class MultiModalNet_A(nn.Module):
         self.pool = nn.MaxPool2d(2, 2)
         self.fc0 = nn.Linear(2, 10)
         self.attention = Attention(128 * 8 * 8 + 10, 128 * 8 * 8 + 10)
-        self.fc2 = nn.Linear(128 * 8 * 8 + 10, 250)
+        self.fc1 = nn.Linear(128 * 8 * 8 + 10, 500)
+        self.fc2 = nn.Linear(500, 250)
         self.fc3 = nn.Linear(250, 9)  # Assuming there are 2 classes - cats and dogs
 
     def forward(self, x, features):
@@ -116,6 +117,7 @@ class MultiModalNet_A(nn.Module):
         features = F.relu(self.fc0(features))
         x = torch.cat((x, features), dim=1)
         x = self.attention(x)
+        x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
         x = self.fc3(x)
         return x
