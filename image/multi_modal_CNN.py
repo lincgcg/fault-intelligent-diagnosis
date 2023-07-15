@@ -56,6 +56,9 @@ class CustomImageFolder(DatasetFolder):
         
         if self.transform is not None:
             sample = self.transform(sample)
+        
+        print(image_name)
+        print(self.csv_data.index)
 
         if image_name in self.csv_data.index:
             features = self.csv_data.loc[image_name, ["日产液量", "日产气量"]].values
