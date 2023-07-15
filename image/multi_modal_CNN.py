@@ -57,15 +57,13 @@ class CustomImageFolder(DatasetFolder):
         if self.transform is not None:
             sample = self.transform(sample)
         
-        print(image_name)
-        print(self.csv_data.index)
 
-        if image_name in self.csv_data.index:
-            features = self.csv_data.loc[image_name, ["日产液量", "日产气量"]].values
-            features = torch.from_numpy(features.astype('float'))  # Convert features to tensor
-            return sample, features, target
-
+        # if image_name in self.csv_data.index:
+        features = self.csv_data.loc[image_name, ["日产液量", "日产气量"]].values
+        features = torch.from_numpy(features.astype('float'))  # Convert features to tensor
         return sample, features, target
+
+        # return sample, features, target
 
 transform = transforms.Compose([
     transforms.Resize((224, 224)),  # Resize images to 224x224
