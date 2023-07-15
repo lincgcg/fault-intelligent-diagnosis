@@ -59,25 +59,49 @@ train_data, test_data = random_split(dataset, [train_size, val_size])
 
 # Create data loaders
 train_loader = torch.utils.data.DataLoader(train_data, batch_size=64, shuffle=True)
-test_loader = torch.utils.data.DataLoader(test_data, batch_size=64, shuffle=False)
+# test_loader = torch.utils.data.DataLoader(test_data, batch_size=64, shuffle=False)
 
 # Define a simple CNN
 ## shallow CNN
-class SmallestNet(nn.Module):
+class Net(nn.Module):
     def __init__(self):
-        super(SmallestNet, self).__init__()
-        self.conv1 = nn.Conv2d(3, 6, 3, padding=1)
+        super(Net, self).__init__()
+        self.conv1 = nn.Conv2d(3, 6, 5)
         self.pool = nn.MaxPool2d(2, 2)
-        self.fc1 = nn.Linear(6 * 16 * 16, 32)
-        self.fc2 = nn.Linear(32, 9)  # Assuming there are 9 classes
+        self.conv2 = nn.Conv2d(6, 16, 5)
+        self.fc1 = nn.Linear(16 * 13 * 13, 120)
+        self.fc2 = nn.Linear(120, 84)
+        self.fc3 = nn.Linear(84, 9)  # Assuming there are 2 classes - cats and dogs
 
     def forward(self, x):
         x = self.pool(F.relu(self.conv1(x)))
-        x = self.pool(x)
-        # print(x.shape) 
-        x = x.view(-1, 6 * 16 * 16)
+        x = self.pool(F.relu(self.conv2(x)))
+        x = x.view(-1, 16 * 13 * 13)
         x = F.relu(self.fc1(x))
-        x = self.fc2(x)
+        x = F.relu(self.fc2(x))
+        x = self.fc3(x)
+        return x
+
+# Define a deeper CNN
+class DeeperNet(nn.Module):
+    def __init__(self):
+        super(DeeperNet, self).__init__()
+        self.conv1 = nn.Conv2d(3, 32, 3, padding=1)
+        self.conv2 = nn.Conv2d(32, 64, 3, padding=1)
+        self.conv3 = nn.Conv2d(64, 128, 3, padding=1)
+        self.pool = nn.MaxPool2d(2, 2)
+        self.fc1 = nn.Linear(128 * 8 * 8, 500)
+        self.fc2 = nn.Linear(500, 250)
+        self.fc3 = nn.Linear(250, 9)  # Assuming there are 2 classes - cats and dogs
+
+    def forward(self, x):
+        x = self.pool(F.relu(self.conv1(x)))
+        x = self.pool(F.relu(self.conv2(x)))
+        x = self.pool(F.relu(self.conv3(x)))
+        x = x.view(-1, 128 * 8 * 8)
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = self.fc3(x)
         return x
 
 # Evaluate the model
@@ -121,7 +145,8 @@ def check_accuracy(test_loader, model):
 
 
 # Instantiate the CNN
-model =  SmallestNet()
+model = DeeperNet()
+model = model.half() 
 model.to(device)
 
 # Define the loss function and optimizer
@@ -137,15 +162,12 @@ for epoch in range(epoch_num):  # loop over the dataset multiple times
 
     for i, data in enumerate(train_loader, 0):
         inputs, labels = data[0].to(device), data[1].to(device)
-
+        inputs = inputs.half()
         # zero the parameter gradients
         optimizer.zero_grad()
 
         # forward + backward + optimize
         outputs = model(inputs)
-        # print(inputs.shape)
-        # print(outputs.shape)
-        # print(labels.shape)
         loss = criterion(outputs, labels)
         loss.backward()
         optimizer.step()
@@ -157,14 +179,14 @@ for epoch in range(epoch_num):  # loop over the dataset multiple times
             print("Epoch id: {}, Training steps: {}, Avg loss: {:.3f}".format(epoch, i + 1, total_loss / report_steps))
             # wandb.log({"loss": total_loss / report_steps})
             total_loss = 0.0
-    # print("epoch num : ")
+    print("epoch num : ")
     # print(epoch)
     # check_accuracy(test_loader, model)
 
 # print("Final Test")
 # check_accuracy(test_loader, model)
 
-torch.save(model.state_dict(), '/mnt/mxy/linchungang/image_diagnosis/fulltrain/float32/SmallestNet.pth')
+torch.save(model.state_dict(), '/mnt/mxy/linchungang/image_diagnosis/full_train/float16/CNN_16.pth')
 
 print('Finished Training')
 
