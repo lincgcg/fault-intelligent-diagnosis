@@ -52,6 +52,7 @@ class CustomImageFolder(DatasetFolder):
         
 
         # if image_name in self.csv_data.index:
+        print(self.csv_data.columns)
         features = self.csv_data.loc[image_name, feature_list].values
         features = torch.from_numpy(features.astype('float'))  # Convert features to tensor
         return sample, features, target
