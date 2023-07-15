@@ -47,7 +47,7 @@ class MultiModalNet(nn.Module):
 
 # Load the saved model
 model = MultiModalNet()
-file_path = "/Users/cglin/Desktop/fault-intelligent-diagnosis/8/model/multimodal_CNN.pth"
+file_path = "/Users/cglin/Desktop/fault-intelligent-diagnosis/9/model/multimodal_CNN.pth"
 model.load_state_dict(torch.load(file_path, map_location=torch.device('cpu')))
 model.eval()
 
@@ -98,7 +98,7 @@ class TestImageFolder(DatasetFolder):
 # test_data = CustomImageDataset(test_path, transform=transform)
 # test_loader = torch.utils.data.DataLoader(test_data, batch_size=1, shuffle=False)
 
-dataset = TestImageFolder('/Users/cglin/Desktop/fig/test', '/Users/cglin/Desktop/dataset/test/test.csv', transform=transform)
+dataset = TestImageFolder('/Users/cglin/Desktop/fig2/test', '/Users/cglin/Desktop/dataset/test/test.csv', transform=transform)
 
 test_loader = torch.utils.data.DataLoader(dataset, batch_size=1, shuffle=False)
 
@@ -121,7 +121,7 @@ for id, class_name in id_class_dict.items():
 sorted_dict = dict(sorted(id_class_dict.items(), key=lambda item: int(item[0]), reverse=False))
 
 # Write the sorted dictionary to a CSV file
-with open('/Users/cglin/Desktop/fault-intelligent-diagnosis/8/result.csv', 'w', newline='') as file:
+with open('/Users/cglin/Desktop/fault-intelligent-diagnosis/9/result.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(["ID", "label"])  # Write header
     for id, label in sorted_dict.items():
