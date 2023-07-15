@@ -192,7 +192,7 @@ for epoch in range(epoch_num):  # loop over the dataset multiple times
 # print("Final Test")
 # check_accuracy(test_loader, model)
 
-torch.save(model.state_dict(), '/mnt/mxy/linchungang/image_diagnosis/full_train/float32/multimodal_CNN.pth')
+torch.save(model.state_dict(), '/mnt/mxy/linchungang/image_diagnosis/full_train/final/multimodal_CNN.pth')
 
 print('Finished Training')
 
