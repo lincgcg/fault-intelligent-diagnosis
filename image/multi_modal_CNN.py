@@ -104,7 +104,7 @@ class MultiModalNet(nn.Module):
         x = self.pool(F.relu(self.conv2(x)))
         x = x.view(-1, 32 * 8 * 8)
         print(x.shape)
-        print(feature.shape)
+        print(features.shape)
         x = torch.cat((x, features), dim=1)  # Concatenate the CNN features and the extra features
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
