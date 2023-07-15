@@ -34,12 +34,16 @@
 
 CUDA_VISIBLE_DEVICES=2,3 python CNN_fulltrain.py --lr 0.01 --name CNN_0.01
 
-scp -P 19000 ms1@120.92.17.23:/mnt/mxy/linchungang/image_diagnosis/full_train/float32/CNN.pth /Users/cglin/Desktop/CNN/fulltrain/float32/CNN
+scp -P 19000 ms1@120.92.17.23:/mnt/mxy/linchungang/image_diagnosis/full_train/float32/CNN.pth /Users/cglin/Desktop/CNN/fulltrain/float32/CNN/
 
 CUDA_VISIBLE_DEVICES=2,3 python small_CNN_fulltrain.py --lr 0.01 --name CNN_0.01
 
-scp -P 19000 ms1@120.92.17.23:/mnt/mxy/linchungang/image_diagnosis/full_train/float32/SmallerNet.pth /Users/cglin/Desktop/CNN/fulltrain/float32/SmallerNet
+scp -P 19000 ms1@120.92.17.23:/mnt/mxy/linchungang/image_diagnosis/full_train/float32/SmallerNet.pth /Users/cglin/Desktop/CNN/fulltrain/float32/SmallerNet/
 
 CUDA_VISIBLE_DEVICES=2,3 python smallest_CNN_fulltrain.py --lr 0.01 --name CNN_0.01
 
-scp -P 19000 ms1@120.92.17.23:/mnt/mxy/linchungang/image_diagnosis/full_train/float32/SmallestNet.pth /Users/cglin/Desktop/CNN/fulltrain/float32/SmallestNet
+scp -P 19000 ms1@120.92.17.23:/mnt/mxy/linchungang/image_diagnosis/full_train/float32/SmallestNet.pth /Users/cglin/Desktop/CNN/fulltrain/float32/SmallestNet/
+
+CUDA_VISIBLE_DEVICES=2,3 python CNN_fulltrain_float16.py --lr 0.01 --name CNN_0.01
+
+scp -P 19000 ms1@120.92.17.23:/mnt/mxy/linchungang/image_diagnosis/full_train/float16/CNN_16.pth /Users/cglin/Desktop/CNN/fulltrain/float16/CNN/
