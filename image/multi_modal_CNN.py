@@ -128,7 +128,12 @@ class MultiModalNet(nn.Module):
         x = self.pool(F.relu(self.conv2(x)))
         x = self.pool(F.relu(self.conv3(x)))
         x = x.view(-1, 128 * 8 * 8)
+        print(x.shape)
+        print(features.shape)
+        
         x = torch.cat((x, features), dim=1)
+        
+        print(x.shape)
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
         x = self.fc3(x)
