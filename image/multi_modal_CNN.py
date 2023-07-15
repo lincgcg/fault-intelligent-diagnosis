@@ -62,7 +62,7 @@ class CustomImageFolder(DatasetFolder):
             features = torch.from_numpy(features.astype('float'))  # Convert features to tensor
             return sample, features, target
 
-        return sample, target
+        return sample, features, target
 
 transform = transforms.Compose([
     transforms.Resize((224, 224)),  # Resize images to 224x224
@@ -165,6 +165,7 @@ epoch_num = 10
 for epoch in range(epoch_num):  # loop over the dataset multiple times
 
     for i, data in enumerate(train_loader, 0):
+        print(data)
         images, features, labels = data[0].to(device), data[1].to(device), data[2].to(device)
 
         # zero the parameter gradients
