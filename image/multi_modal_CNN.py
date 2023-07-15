@@ -52,7 +52,7 @@ class CustomImageFolder(DatasetFolder):
     def __getitem__(self, index):
         path, target = self.samples[index]
         sample = self.loader(path)
-        image_name = os.path.basename(path)
+        image_name = os.path.splitext(os.path.basename(path))[0]
         
         if self.transform is not None:
             sample = self.transform(sample)
