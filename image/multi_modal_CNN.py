@@ -103,6 +103,8 @@ class MultiModalNet(nn.Module):
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
         x = x.view(-1, 32 * 8 * 8)
+        print(x.shape)
+        print(feature.shape)
         x = torch.cat((x, features), dim=1)  # Concatenate the CNN features and the extra features
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
@@ -166,7 +168,7 @@ epoch_num = 10
 for epoch in range(epoch_num):  # loop over the dataset multiple times
 
     for i, data in enumerate(train_loader, 0):
-        print(data)
+        # print(data)
         images, features, labels = data[0].to(device), data[1].to(device), data[2].to(device)
 
         # zero the parameter gradients
