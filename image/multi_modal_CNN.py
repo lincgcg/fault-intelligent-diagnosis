@@ -65,10 +65,12 @@ class CustomImageFolder(DatasetFolder):
 
         # return sample, features, target
 
+
+# Define transforms for the training and testing data
 transform = transforms.Compose([
-    transforms.Resize((64, 64)),  # Resize images to 224x224
-    transforms.ToTensor(),  # Convert PIL Image to PyTorch tensor
-    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])  # Normalize images with ImageNet mean and standard deviation
+    transforms.Resize((64,64)),
+    transforms.ToTensor(),
+    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
 ])
 
 
@@ -90,26 +92,47 @@ train_data = CustomImageFolder('/mnt/mxy/linchungang/image_diagnosis/fig/train',
 train_loader = torch.utils.data.DataLoader(train_data, batch_size=64, shuffle=True)
 # test_loader = torch.utils.data.DataLoader(test_data, batch_size=64, shuffle=False)
 
+# class MultiModalNet(nn.Module):
+#     def __init__(self):
+#         super(MultiModalNet, self).__init__()
+#         self.conv1 = nn.Conv2d(3, 16, 3, padding=1)
+#         self.conv2 = nn.Conv2d(16, 32, 3, padding=1)
+#         self.pool = nn.MaxPool2d(2, 2)
+#         self.fc1 = nn.Linear(32 * 8 * 8 + 2, 64)  # Assuming there are 2 extra features
+#         self.fc2 = nn.Linear(64, 9)  # Assuming there are 9 classes
+
+#     def forward(self, x, features):
+#         x = self.pool(F.relu(self.conv1(x)))
+#         x = self.pool(F.relu(self.conv2(x)))
+#         x = x.view(-1, 32 * 8 * 8)
+#         print(x.shape)
+#         print(features.shape)
+#         x = torch.cat((x, features), dim=1)  # Concatenate the CNN features and the extra features
+#         x = F.relu(self.fc1(x))
+#         x = self.fc2(x)
+#         return x
+
 class MultiModalNet(nn.Module):
     def __init__(self):
         super(MultiModalNet, self).__init__()
-        self.conv1 = nn.Conv2d(3, 16, 3, padding=1)
-        self.conv2 = nn.Conv2d(16, 32, 3, padding=1)
+        self.conv1 = nn.Conv2d(3, 32, 3, padding=1)
+        self.conv2 = nn.Conv2d(32, 64, 3, padding=1)
+        self.conv3 = nn.Conv2d(64, 128, 3, padding=1)
         self.pool = nn.MaxPool2d(2, 2)
-        self.fc1 = nn.Linear(32 * 8 * 8 + 2, 64)  # Assuming there are 2 extra features
-        self.fc2 = nn.Linear(64, 9)  # Assuming there are 9 classes
+        self.fc1 = nn.Linear(128 * 8 * 8 + 2, 500)
+        self.fc2 = nn.Linear(500, 250)
+        self.fc3 = nn.Linear(250, 9)  # Assuming there are 2 classes - cats and dogs
 
     def forward(self, x, features):
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
-        x = x.view(-1, 32 * 8 * 8)
-        print(x.shape)
-        print(features.shape)
-        x = torch.cat((x, features), dim=1)  # Concatenate the CNN features and the extra features
+        x = self.pool(F.relu(self.conv3(x)))
+        x = x.view(-1, 128 * 8 * 8)
+        x = torch.cat((x, features), dim=1)
         x = F.relu(self.fc1(x))
-        x = self.fc2(x)
+        x = F.relu(self.fc2(x))
+        x = self.fc3(x)
         return x
-
 
 # Evaluate the model
 def check_accuracy(test_loader, model):
