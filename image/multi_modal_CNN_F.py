@@ -179,7 +179,7 @@ optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=0.9)
 
 report_steps = 30
 total_loss = 0
-epoch_num = 10
+epoch_num = 20
 # Train the model
 for epoch in range(epoch_num):  # loop over the dataset multiple times
 
@@ -210,7 +210,7 @@ for epoch in range(epoch_num):  # loop over the dataset multiple times
 # print("Final Test")
 # check_accuracy(test_loader, model)
 
-# torch.save(model.state_dict(), '/mnt/mxy/linchungang/image_diagnosis/full_train/float32/MultiModalNet_A.pth')
+torch.save(model.state_dict(), '/mnt/mxy/linchungang/image_diagnosis/full_train/float32/MultiModalNet_F.pth')
 
 print('Finished Training')
 
